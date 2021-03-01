@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>Registrar Conta</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+        <ion-item lines="full">
+            <ion-label position="floating">Descrição</ion-label>
+            <ion-input type="text" formControlName="descricao" required></ion-input>
+        </ion-item>
+
+
+        <ion-item lines="full">
+            <ion-label position="floating">Tipo de Conta</ion-label>
+            <ion-select multiple="false" placeholder="Selecione o tipo da Conta" id="tipoConta" formControlName="tipoConta">
+                <ion-select-option *ngFor="let tipo of tipoConta">{{tipo.nomeTipo}}</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="floating">Valor</ion-label>
+            <ion-input type="text" formControlName="valor" required></ion-input>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="floating">Data de Vencimento</ion-label>
+            <ion-datetime doneText="Confirmar" cancelText="Cancelar" displayFormat="DD/MM/YYYY" formControlName="dataVencimento"></ion-datetime>
+        </ion-item>
+
+        <ion-item lines="full">
+            <ion-label position="floating">Situação</ion-label>
+            <ion-select multiple="false" placeholder="Selecione a situação" id="situacao" formControlName="situacao">
+                <ion-select-option>Quitada</ion-select-option>
+                <ion-select-option>Em aberto</ion-select-option>
+            </ion-select>
+
+        </ion-item>
+
+        <ion-row>
+            <ion-col>
+                <ion-button type="submit" color="light" [disabled]="!formGroup.valid" expand="block">Salvar</ion-button>
+                <ion-button [routerLink]="['/conta']" type="submit" color="danger" expand="block">Cancelar</ion-button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+            <ion-button [routerLink]="['/registration-tipoconta']" type="button" color="primary" expand="block">Adicionar tipo conta</ion-button>
+            </ion-col>
+        </ion-row>
+
+    </form>
+</ion-content>
