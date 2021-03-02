@@ -12,7 +12,7 @@
     <ion-list>
         <ion-item-sliding *ngFor="let conta of contasUsuario">
             <ion-item [routerLink]="'/registration-conta/' + conta.id" detail>
-                <ion-label>{{conta.descricao + "-" + conta.dataVencimento}}</ion-label>
+                <ion-label>{{conta.descricao + " - " + formatarData(conta.dataVencimento)}}</ion-label>
             </ion-item>
             <ion-item-options side="start">
                 <ion-item-option color="danger" (click)="excluirConta(conta.id)">Excluir</ion-item-option>
@@ -26,7 +26,7 @@
         </ion-fab-button>
     </ion-fab>
 
-    
+
 </ion-content>
 <div class="icon alt" *ngIf="even"></div>
-      <div class="icon" *ngIf="odd"></div>
+<div class="icon" *ngIf="odd"></div>

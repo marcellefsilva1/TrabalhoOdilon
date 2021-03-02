@@ -27,6 +27,8 @@ export class RegistrationTipocontaPage implements OnInit {
     nomeTipo: null
   };
 
+  i = null;
+
   public formGroup: FormGroup;
   constructor(private activatedRoute: ActivatedRoute, private navController: NavController, public toastController: ToastController,
     private formBuilder: FormBuilder) {
@@ -51,40 +53,39 @@ export class RegistrationTipocontaPage implements OnInit {
       localStorage.setItem('tipoBD', JSON.stringify(this.tipos));
     }
 
-    this.formGroup.get('nomeTipo').setValue(this.tipo.nomeTipo);
+    this.activatedRoute.params.subscribe(param => {
+      if (param['nomeTipo']) {
+        for (var i = 0; i < this.tipos.length; i++) {
+          if (this.tipos[i].nomeTipo == param['nomeTipo']) {
+            this.tipo = this.tipos[i];
+            this.i = i;
+          }
+        }
+      }
+    });
 
-    this.tipo.nomeTipo = this.activatedRoute.snapshot.paramMap.get('nomeTipo');
-    if (this.tipo.nomeTipo){
-      this.tipo = this.tipos[this.tipo.nomeTipo];
-    }else{
-      this.tipo.nomeTipo = this.tipos.length;
-    }
+    this.formGroup.get('nomeTipo').setValue(this.tipo.nomeTipo);
   }
 
   async submitForm() {
     this.tipo.nomeTipo = this.formGroup.value.nomeTipo;
 
     this.tipos = JSON.parse(localStorage.getItem('tipoBD'));
-    
 
-    if (!this.verificarTipoConta(this.tipo.nomeTipo)) {
+
+    if (!this.verificarTipoConta(this.tipo.nomeTipo) && this.i === null) {
       this.tipos.push(this.tipo);
-      localStorage.setItem('tipoBD', JSON.stringify(this.tipos));
       this.exibirMensagem('Tipo de Conta cadastrado com sucesso!!!');
-      this.navController.navigateBack('/tipo-conta');
       //window.location.href = window.location.href.replace('registration-tipoconta', 'tipo-conta');
     } else {
-      //this.exibirMensagem('Não foi possível criar a conta!!!');
-      if(this.tipo.nomeTipo){
-        for(let i = 0; i < this.tipos.length; i++){
-          if(this.tipos[i].nomeTipo === this.tipo.nomeTipo){
-            this.tipos[i] = this.tipo;
-          }
-        }
-      }
+      this.tipos[this.i] = this.tipo;
+      this.exibirMensagem('Tipo de Conta editado com sucesso!!!');
     }
 
-  
+    localStorage.setItem('tipoBD', JSON.stringify(this.tipos));
+    this.navController.navigateBack('/tipo-conta');
+
+
   }
 
   async exibirMensagem(mensagem: string) {

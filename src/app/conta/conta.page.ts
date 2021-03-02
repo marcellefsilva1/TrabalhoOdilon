@@ -13,6 +13,20 @@ export class ContaPage implements OnInit {
   contas: any = [];
   contasUsuario: any = [];
   pessoa: any;
+  meses: any = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez',
+  ];
 
 
   constructor(private navController: NavController, public alertController: AlertController, public toastController: ToastController) {}
@@ -81,6 +95,17 @@ export class ContaPage implements OnInit {
       duration: 1500
     });
     toast.present();
+  }
+
+  formatarData(data: string): string {
+    let date = new Date(data);
+    let dataFormatada =
+      date.getDate() +
+      '/' +
+      this.meses[date.getMonth()] +
+      '/' +
+      date.getFullYear();
+    return dataFormatada;
   }
 
 }

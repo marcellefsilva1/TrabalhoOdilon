@@ -36,7 +36,7 @@ const routes: Routes = [
     loadChildren: () => import('./registration-conta/registration-conta.module').then( m => m.RegistrationContaPageModule)
   },
   {
-    path: 'registration-tipoconta/:tipo.nomeTipo',
+    path: 'registration-tipoconta/:nomeTipo',
     loadChildren: () => import('./registration-tipoconta/registration-tipoconta.module').then(m => m.RegistrationTipocontaPageModule)
   },
   {
